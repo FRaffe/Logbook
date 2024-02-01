@@ -8,35 +8,49 @@ namespace LogBook.Lib;
 
 public class MemoryRepository : IRepository
 {
-    public bool Add(Entry entry)
-    {
-        throw new NotImplementedException();
-    }
-
-    public bool Delete(Entry entry)
-    {
-        throw new NotImplementedException();
-    }
-
-    public List<Entry> GetAll()
-    {
-        List<Entry> list = new List<Entry>()
+    List<Entry> list = new List<Entry>()
         {
             new Entry(DateTime.Now, DateTime.Now, 10000, 10100, "ZE-1234", "Zell am See", "Salzburg"),
             new Entry(DateTime.Now, DateTime.Now, 10100, 10200, "ZE-1234", "Salzburg", "Zell am See")
         };
 
-        return list;
+
+    public bool Add(Entry entry)
+    {
+        list.Add(entry);
+        return true;
+    }
+
+    public bool Delete(Entry entry)
+    {
+        return list.Remove(entry);
+    }
+
+    public List<Entry> GetAll()
+    {
+
+
+        return this.list;
 
     }
 
     public bool Save()
     {
-        throw new NotImplementedException();
+        return true;
     }
 
     public bool Update(Entry entry)
     {
-        throw new NotImplementedException();
+        var item = (from search in list
+                   where entry.Id == search.Id
+                   select search).FirstOrDefault();
+
+        if (item != null) 
+        {
+            item = entry;
+            return true;
+        }
+
+        return false;
     }
 }

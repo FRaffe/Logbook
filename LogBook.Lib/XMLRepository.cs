@@ -33,12 +33,16 @@ public class XMLRepository : IRepository
 
     public List<Entry> GetAll()
     {
-        var entries = from entry in this._rootElement.Decendants("entry")
+        var entries = from entry in this._rootElement.Descendants("entry")
                       select entry;
 
         //TODO:
         //-objekt Entry erstellen
         //-liste zurückgeben
+
+        throw new NotImplementedException();
+
+        //return entries;
     }
 
     public bool Save()
