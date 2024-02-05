@@ -49,5 +49,9 @@
             this.From = from;
             this.To = to;
         }
+        public override string ToString()
+        {
+            return String.Format("{0} nach {1}", From, To);
+        }
     }
 }
