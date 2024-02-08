@@ -26,6 +26,15 @@ public class MemoryRepository : IRepository
         return list.Remove(entry);
     }
 
+    public Entry? Find(string id)
+    {
+        var entries = from e in list
+                      where e.Id == id 
+                      select e;
+
+        return entries.FirstOrDefault();
+    }
+
     public List<Entry> GetAll()
     {
 
