@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,12 @@ public interface IRepository
     bool Delete(Entry entry);
     
     bool Update(Entry entry);
+    /// <summary>
+    /// Search for an entry
+    /// </summary>
+    /// <param name="id">the id to search for</param>
+    /// <returns>Entry or null</returns>
+    Entry? Find(string id);
 
     bool Save();
 
