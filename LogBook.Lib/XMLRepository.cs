@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,7 +50,7 @@ public class XMLRepository : IRepository
         node.Add(fromAttrib);
 
         var toAttrib = new XAttribute("to", entry.To.ToString());
-        node.Add(idAttrib);
+        node.Add(toAttrib);
 
         node.Add(entry.Description.ToString());
 
@@ -72,13 +73,27 @@ public class XMLRepository : IRepository
     public List<Entry> GetAll()
     {
         var entries = from entry in this._rootElement.Descendants("entry")
-                      select entry;
+                      select new Entry(Convert.ToDateTime(entry.Attribute("start").Value),
+                                        Convert.ToDateTime(entry.Attribute("end").Value),
+                                        (int)entry.Attribute("startkm"),
+                                        (int)entry.Attribute("endkm"),
+                                        entry.Attribute("numberplate").Value,
+                                        entry.Attribute("from").Value,
+                                        entry.Attribute("to").Value,
+                                        entry.Attribute("id").Value
+                                        )
+                                        {
+                                        Description = entry.Value
+                                       };
+
 
         //TODO:
         //-objekt Entry erstellen
         //-liste zurückgeben
 
-        throw new NotImplementedException();
+       // throw new NotImplementedException();
+
+        return entries.ToList<Entry>();
 
         //return entries;
     }
@@ -92,13 +107,35 @@ public class XMLRepository : IRepository
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine(ex.Massage);
+            System.Diagnostics.Debug.WriteLine(ex.Message);
             return false;
         }
     }
 
     public bool Update(Entry entry)
     {
-        throw new NotImplementedException();
+        var item = (from e in _rootElement.Descendants("entry")
+                       where (string)e.Attribute("id") == entry.Id
+                       select e).FirstOrDefault();
+
+        if (item != null)
+        {
+            item.SetAttributeValue("start", entry.Start.ToString());
+            item.SetAttributeValue("end", entry.End.ToString());
+            item.SetAttributeValue("startkm", entry.StartKM.ToString());
+            item.SetAttributeValue("endkm", entry.EndKM.ToString());
+            item.SetAttributeValue("numberplate", entry.NumberPlate.ToString());
+            item.SetAttributeValue("to", entry.To.ToString());
+            item.SetAttributeValue("from", entry.From.ToString());
+
+            // id nicht, da das object sonst nicht gefunden wird
+
+            return this.Save();
+        }
+        else
+        {
+            return false;
+        }
+
     }
 }
