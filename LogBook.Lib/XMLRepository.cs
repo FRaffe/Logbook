@@ -72,8 +72,8 @@ public class XMLRepository : IRepository
 
     public Entry? Find(string id)
     {
-        var item = (from e in _rootElement.Descendants("entry")
-                    where (string)e.Attribute("id") == id
+        var item = (from entry in _rootElement.Descendants("entry")
+                    where (string)entry.Attribute("id") == id
                     select new Entry(Convert.ToDateTime(entry.Attribute("start").Value),
                                         Convert.ToDateTime(entry.Attribute("end").Value),
                                         (int)entry.Attribute("startkm"),
@@ -86,6 +86,8 @@ public class XMLRepository : IRepository
                     {
                         Description = entry.Value
                     }).FirstOrDefault();
+
+        return item;
 
     }
 
