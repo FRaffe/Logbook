@@ -1,4 +1,5 @@
-﻿using LogBook.LogBookApp.ViewModels;
+﻿using LogBook.Lib;
+using LogBook.LogBookApp.ViewModels;
 using Microsoft.Extensions.Logging;
 
 namespace LogBook.LogBookApp
@@ -18,6 +19,20 @@ namespace LogBook.LogBookApp
 
             builder.Services.AddSingleton<MainViewModel>();
             builder.Services.AddSingleton<MainPage>();
+
+            System.Diagnostics.Debug.WriteLine("Pfad:");
+
+            string path = FileSystem.Current.AppDataDirectory;
+
+            string filename = "data.xml";
+
+            string fullpath = System.IO.Path.Combine(path, filename);
+
+            System.Diagnostics.Debug.WriteLine(fullpath);
+            
+            builder.Services.AddSingleton<IRepository>(new XMLRepository(fullpath));
+
+
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
