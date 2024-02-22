@@ -22,6 +22,11 @@ public partial class MainViewModel(IRepository repository) : ObservableObject
     [RelayCommand]
     void LoadData()
     {
+        var entries = _repository.GetAll();
 
+        foreach (var entry in entries)
+        {
+            Entries.Add(entry);
+        }
     }
 }
