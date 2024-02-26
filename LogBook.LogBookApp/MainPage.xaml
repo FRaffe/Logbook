@@ -12,6 +12,7 @@
                                         Command="{Binding LoadDataCommand}" />
     </ContentPage.Behaviors>
 
+    <ScrollView>
     <!-- erstes Grid (Hauptgrid) -->
     <Grid RowDefinitions="Auto,180" Margin="10">
         
@@ -49,7 +50,55 @@
         </Grid>
 
         <Button Command="{Binding AddCommand}" Grid.Row="1" Text="Add demo" />
+        
+        
+        <!-- Eingabe -->
+        <Grid Padding="10" ColumnSpacing="10" ColumnDefinitions="*,*" 
+              RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto" 
+              RowSpacing="20" Grid.Row="2">
+            <!-- header 0/0, span: 2-->
+            <Label Text="Fahrt Hinzufügen" FontSize="Subtitle"
+                   SemanticProperties.HeadingLevel="Level2" Grid.ColumnSpan="2"/>
+            
+            <!-- Start 1/0 -->
+            <StackLayout Grid.Row="1">
+                <Label Text="Start" />
+                <DatePicker Date="{Binding Start}" Format="yyyy-MM-dd" />
+            </StackLayout>
+
+            <!-- Start 1/1 -->
+            <StackLayout Grid.Row="1" Grid.Column="1">
+                <Label Text="Ende" />
+                <DatePicker Date="Binding End" Format="yyyy-MM-dd" />
+            </StackLayout>
+
+            <!-- Description 2/0, span: 2 -->
+            <StackLayout Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+                <Label Text="Beschreibung" />
+                <Entry Text="{Binding Description}" />
+            </StackLayout>
+
+
+            <!-- Numberplate 3/0 -->
+            <StackLayout Grid.Row="3" Grid.Column="0" >
+                <Label Text="Kennzeichen" />
+                <Entry Text="{Binding NumberPlate}" />
+            </StackLayout>
+
+            <!-- Start km 4/0, End km 4/1 -->
+            <StackLayout Grid.Row="4">
+                <Label Text="Start-Km" />
+                <Entry Text="{Binding StartKM}" />
+            </StackLayout>
+            <StackLayout Grid.Row="4" Grid.Column="1">
+                <Label Text="End-KM" />
+                <Entry Text="{Binding EndKM}" />
+            </StackLayout>
+
+
+            </Grid>
+        <!-- Ende Eingabe -->
     </Grid>
-    
+    </ScrollView>
     
 </ContentPage>
